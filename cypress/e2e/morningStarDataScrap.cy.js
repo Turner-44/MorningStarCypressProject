@@ -1,14 +1,14 @@
 import { A_D } from "../fixtures/nyseStockTickersA-D.js";
 
 describe("morningStarGetPageValues", () => {
-  it("goToIncomeFinances", () => {
-    Cypress.on("uncaught:exception", (err, runnable) => {
-      return false;
-    });
+  A_D.forEach((stock) => {
+    it(`Running scrape for ${stock}`, () => {
+      Cypress.on("uncaught:exception", (err, runnable) => {
+        return false;
+      });
 
-    cy.intercept("**/financials").as("stockData");
+      cy.intercept("**/financials").as("stockData");
 
-    A_D.forEach((stock) => {
       cy.visit(`https://www.morningstar.com/stocks/xnys/${stock}/financials`, {
         timeout: 20000,
         failOnStatusCode: false,
